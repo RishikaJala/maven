@@ -1,0 +1,112 @@
+MINIKUBE:
+
+1. open powershell
+2. minikube start
+3. kubectl create deployment mynginx --image=nginx
+4. kubectl get pods 
+5. kubectl expose deployment mynginx --type=NodePort --port=80 --target-port=80
+6. kubectl scale deployment mynginx --replicas=4
+7. kubectl port-forward svc/mynginx 8081:80
+
+OPEN http://localhost:8081
+
+8. kubectl delete deployment mynginx
+9. kubectl delete service mynginx
+10. minikube stop
+
+------------------------------
+
+NAGIOS
+
+1. docker pull jasonrivers/nagios:latest
+2. docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
+
+OPEN http://localhost:8888
+
+Login:
+username: nagiosadmin
+password: nagios
+
+3. docker stop nagiosdemo
+
+
+-------------------------------
+
+AWS
+
+1. go to modules
+2. select the launch aws learner lab
+3. then start lab
+4. wait till aws is green then click on it 
+5. go to EC2 and then launch instance 
+6. give name tag, then choose ubuntu, then generate a key pair, then check the firewall add anywhere all traffic and then launch
+7. once the instance is created, click on the instance and then click on connect
+8. int the cli tht pops up type the following commands
+    1. sudo su
+    2. sudo apt-get update
+    3. sudo apt-get install [docker.io](http://docker.io) enter y
+       sudo apt-get install -y docker.io 
+    4. sudo docker —version
+    5. sudo docker images
+    6. sudo docker ps
+    7. git clone http of the maven web application
+    8. cd folder name
+    9. ls
+    10. nano Dockerfile
+    11. sudo docker build -t img1  .
+    12. sudo docker run -d -p img1 8080:8080 img1
+    13. copy the public ip
+    14. got to incog ip:portnumber
+    15. exit
+
+
+FROM tomcat:9.0
+
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+
+CMD ["catalina.sh", "run"]
+
+----------------------------------------
+
+TWO PIPELINE
+
+1. create new item
+2. give name choose freestyle project
+3. sorce code management - choose git
+    1. paste the url
+    2. change branch to main
+4. build steps
+    1. invoke top-level maven targets
+        1. clean
+        2. install
+5. post build actions
+    1. archive the artifacts - **/*
+    2. build other projects - maven_test
+6. go to dahsboard 
+7. create new item name it maven_test freestyle proect
+8. build environment - delete workspace before build starts
+9. build steps
+    1. copy artifacts
+        1. give proj1 name (maven_build)
+        2. artifats to copy - **/*
+        3. choose stable build only
+    2. invoke top level maven target - test
+10. post build - archive the artifacts - **/*
+11. go to dashboard
+12. click on “+” to add a view 
+13. name the view and select build pipeline then create
+14. choose up to down stream layout and maven build
+15. save and apply 
+16. run wait for it to turn green
+17. two pipline is done
+
+----------------------------------------
+
+
+
+
+
+
+
